@@ -117,7 +117,7 @@ paths:
         '404':
           description: Project (:project) not found
       security:
-        - catenda_auth::
+        - catenda_auth:
             - write:project
             - read:project
     put:
