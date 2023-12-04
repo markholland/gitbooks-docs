@@ -8,8 +8,6 @@
 [catenda-openapi.yaml](.gitbook/assets/catenda-openapi.yaml)
 {% endswagger %}
 
-Content in between blocks
-
 {% swagger src=".gitbook/assets/catenda-openapi.yaml" path="/project/{projectId}" method="get" %}
 [catenda-openapi.yaml](.gitbook/assets/catenda-openapi.yaml)
 {% endswagger %}
