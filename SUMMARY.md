@@ -13,7 +13,7 @@
 
 ## OpenCDE
 
-* [Projects](opencde/openapi.md)
+* [Projects](opencde/projects.md)
 * [Members](opencde/members.md)
 * [Models](opencde/models.md)
 * [Labels](opencde/labels.md)
