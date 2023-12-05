@@ -3,8 +3,6 @@
 ## Introduction
 
 * [Getting Started](README.md)
-* [Initial setup](introduction/initial-setup.md)
-* [Where to go next](introduction/where-to-go-next.md)
 
 ## Resources
 
@@ -25,9 +23,3 @@
     * [Models](opencde/beta/models.md)
     * [Labels](opencde/beta/labels.md)
   * [Development](http://127.0.0.1:5000/s/gFGzs7FkWbM4mRD6bcDG/)
-* [BCF](bcf/README.md)
-  * [Viewpoint](bcf/viewpoint.md)
-  * [Document](bcf/document.md)
-  * [Comment](bcf/comment.md)
-  * [Issue Board](bcf/issue-board.md)
-  * [Topic](bcf/topic.md)
