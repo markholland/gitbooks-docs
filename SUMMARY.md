@@ -24,3 +24,8 @@
   * [Comment](bcf/comment.md)
   * [Issue Board](bcf/issue-board.md)
   * [Topic](bcf/topic.md)
+* [Beta](beta/README.md)
+  * [Projects](beta/projects.md)
+  * [Members](beta/members.md)
+  * [Models](beta/models.md)
+  * [Labels](beta/labels.md)
