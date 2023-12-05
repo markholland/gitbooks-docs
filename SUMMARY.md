@@ -18,11 +18,9 @@
   * [Members](opencde/members.md)
   * [Models](opencde/models.md)
   * [Labels](opencde/labels.md)
-
-## BCF
-
-* [Viewpoint](bcf/viewpoint.md)
-* [Document](bcf/document.md)
-* [Comment](bcf/comment.md)
-* [Issue Board](bcf/issue-board.md)
-* [Topic](bcf/topic.md)
+* [BCF](bcf/README.md)
+  * [Viewpoint](bcf/viewpoint.md)
+  * [Document](bcf/document.md)
+  * [Comment](bcf/comment.md)
+  * [Issue Board](bcf/issue-board.md)
+  * [Topic](bcf/topic.md)
