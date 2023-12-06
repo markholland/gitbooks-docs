@@ -1,0 +1,978 @@
+openapi: 3.0.3
+info:
+  title: OpenCDE - OpenAPI 3.0
+  description: |-
+    Catenda REST API v2 is the latest supported version and in this documentation we expose all the details on how to access these resources and what you can expect as return values.
+    
+    This documentation assumes a basic knowledge of how REST APIs work. Visit [this](https://www.restapitutorial.com/) link if you need an introduction to this topic.
+
+    In case you have any questions or feedback, we would love to hear from you. Email us at support@catenda.com
+  termsOfService: https://catenda.com/user-terms-of-service/
+  contact:
+    email: support@catenda.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+externalDocs:
+  description: Find out more about Catenda REST API
+  url: https://api.catenda.com/developers/reference/api/v2#catenda-rest-api-v2-stable
+servers:
+  - url: https://api.catenda.com/v2
+tags:
+  - name: project
+    description: Information about what projects are that can be as long as needed
+    externalDocs:
+      description: Find out more about projects
+      url: https://api.catenda.com/developers/reference/api/v2#projects
+  - name: member
+    description: Information about what members are that can be as long as needed
+    externalDocs:
+      description: Find out more about members
+      url: https://api.catenda.com/developers/reference/api/v2#members
+  - name: model
+    description: Information about what models are that can be as long as needed
+    externalDocs:
+      description: Find out more about models
+      url: https://api.catenda.com/developers/reference/api/v2#models
+  - name: label
+    description: Information about what labels are that can be as long as needed
+    externalDocs:
+      description: Find out more about labels
+      url: https://api.catenda.com/developers/reference/api/v2#labels
+paths:
+  /projects:
+    get:
+      tags:
+        - project
+      summary: List projects
+      description: List all projects the current user is member of.
+      operationId: listProjects
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Project'
+      security:
+        - catenda_auth:
+            - write:projects
+            - read:projects
+    post:
+      tags:
+        - project
+      summary: Create project
+      description: |-
+        Create a new project. The project will be owned by the current user or the given origanization and count towards the owners project limit.
+
+        The current user must be an owner of the organization if the new project will be owned by an organization.
+      operationId: addProject
+      requestBody:
+        description: Create a new project
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'          
+        '403':
+          description: Insufficient privilege
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                100:
+                  value:
+                    code: 100
+                    message: Insufficient privilege
+                101:
+                  value:
+                    code: 101
+                    message: Project limit exceeded
+        '404':
+          description: Organization (:org) not found
+        '422':
+          description: Message from input validation
+      security:
+        - catenda_auth:
+            - write:projects
+            - read:projects
+  /project/{project}:
+    get:
+      tags:
+        - project
+      summary: Get project
+      description: Get a project. The current user must be a member of the project.
+      operationId: getProject
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '404':
+          description: Project (:project) not found
+      security:
+        - catenda_auth:  
+            - write:project
+            - read:project
+    put:
+      tags:
+        - project
+      summary: Update an existing project
+      description: Update a project. The current user must be an administrator of the project.
+      operationId: updateProject
+      parameters:
+        - name: project
+          in: path
+          description: ID of project that needs to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update an existing project
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Project'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+        '403':
+          description: Insufficient privilege
+        '404':
+          description: Project (:project) not found
+        '422':
+          description: Message from input validation
+      security:
+        - catenda_auth:
+            - write:projects
+            - read:projects
+    delete:
+      tags:
+        - project
+      summary: Delete project
+      description: |-
+        Delete a project. The current user must be the owner of the project. If the project is owned by an organization, the user must an owner of the organization.
+      operationId: deleteProject
+      parameters:
+        - name: project
+          in: path
+          description: ID of project that needs to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '403':
+          description: Insufficient privilege
+        '404':
+          description: Project (:project) not found
+      security:
+        - catenda_auth:
+            - write:project
+            - read:project
+  /project/{project}/members:
+    get:
+      tags:
+        - member
+      summary: Get members
+      description: List project members.
+      operationId: getMembers
+      parameters:
+        - name: project
+          in: path
+          description: ID of project members belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Member'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+    post:
+      tags:
+        - member
+      summary: Add member
+      description: |-
+        Add a project member. The current user must be an administrator of the project.
+      operationId: addMember
+      parameters:
+        - name: project
+          in: path
+          description: ID of project member will belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new member
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Member'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Already a member:
+                  value:
+                    code: 24
+                    message: User (:user) is already a member
+                Unknown user:
+                  value:
+                    code: 24
+                    message: Unknown user (:user)
+                Unable to set role:
+                  value:
+                    code: 24
+                    message: Unable to set role (:role)
+                Existing team:
+                  value:
+                    code: 24
+                    message: Cannot add an existing team as a member (:user)
+                Invalid role:
+                  value:
+                    code: 24
+                    message: Invalid role (:role)
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Insufficient privilege:
+                  value:
+                    code: 100
+                    message: Insufficient privilege
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+  /project/{project}/members/{user}:
+    get:
+      tags:
+        - member
+      summary: Get member
+      description: Get a project member.
+      operationId: getMember
+      parameters:
+        - name: project
+          in: path
+          description: ID of project member belongs to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: path
+          description: ID of user to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Member not found:
+                  value:
+                    code: 20
+                    message: Member (:user) not found
+    put:
+      tags:
+        - member
+      summary: Update member
+      description: Update project membership. The current user must be a project administrator.
+      operationId: updateMember
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: path
+          description: ID of user to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new member
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Member'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Member not found:
+                  value:
+                    code: 20
+                    message: Member (:user) not found
+    delete:
+      tags:
+        - member
+      summary: Delete member
+      description: Remove a project member. The current user must be a project administrator. The project owner cannot be removed from the project.
+      operationId: deleteMember
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: user
+          in: path
+          description: ID of user to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Member'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Member not found:
+                  value:
+                    code: 20
+                    message: Member (:user) not found
+  /project/{project}/models:
+    get:
+      tags:
+        - model
+      summary: Get models
+      description: List all models in a project.
+      operationId: getModels
+      parameters:
+        - name: project
+          in: path
+          description: ID of project models belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Model'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+    post:
+      tags:
+        - model
+      summary: Add model
+      description: Create a new model.
+      operationId: addModel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project model will belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Model'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Insufficient privilege:
+                  value:
+                    code: 100
+                    message: Insufficient privilege
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+  /project/{project}/models/{model}:
+    get:
+      tags:
+        - model
+      summary: Get model
+      description: Get a model.
+      operationId: getModel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project model belongs to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: model
+          in: path
+          description: ID of model to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Model not found:
+                  value:
+                    code: 20
+                    message: Model (:model) not found
+    put:
+      tags:
+        - model
+      summary: Update model
+      description: Update a model. The current user must be an administrator of the project.
+      operationId: updateModel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: model
+          in: path
+          description: ID of model to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new model
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Model'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Model not found:
+                  value:
+                    code: 20
+                    message: Model (:model) not found
+    delete:
+      tags:
+        - model
+      summary: Delete model
+      description: Delete a model. The current user must be an administrator of the project.
+      operationId: deleteModel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: model
+          in: path
+          description: ID of model to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Model not found:
+                  value:
+                    code: 20
+                    message: Model (:model) not found
+  /project/{project}/labels:
+    get:
+      tags:
+        - label
+      summary: Get labels
+      description: List all labels in a project.
+      operationId: getLabels
+      parameters:
+        - name: project
+          in: path
+          description: ID of project labels belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Label'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+    post:
+      tags:
+        - label
+      summary: Add label
+      description: Creates a new label.
+      operationId: addLabel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project label will belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Creates a new label.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Label'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Insufficient privilege:
+                  value:
+                    code: 100
+                    message: Insufficient privilege
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+  /project/{project}/labels/{label}:
+    get:
+      tags:
+        - label
+      summary: Get label
+      description: Get a label.
+      operationId: getLabel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project label belongs to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: label
+          in: path
+          description: ID of label to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Label'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Label not found:
+                  value:
+                    code: 20
+                    message: Label (:label) not found
+    put:
+      tags:
+        - label
+      summary: Update label
+      description: Update an existing label
+      operationId: updateLabel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: label
+          in: path
+          description: ID of label to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Creates a new label.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Label'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                label not found:
+                  value:
+                    code: 20
+                    message: Label (:label) not found
+    delete:
+      tags:
+        - label
+      summary: Delete label
+      description: Delete a label.
+      operationId: deleteLabel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: model
+          in: path
+          description: ID of label to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Model'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Label not found:
+                  value:
+                    code: 20
+                    message: Label (:label) not found
+components:
+  schemas:
+    Member:
+      required:
+        - role
+        - user
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 989038325613499ea6d35a3d8788b3a9
+        user:
+          $ref: '#/components/schemas/User'
+    Model:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 989038325613499ea6d35a3d8788b3a9
+        name:
+          type: string
+          example: ARC
+    Label:
+      required:
+        - name
+        - color
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 989038325613499ea6d35a3d8788b3a9
+        name:
+          type: string
+          example: Green
+        color:
+          type: string
+          example: '#6aa84f'
+    User:
+      required:
+        - name
+        - username
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 989038325613499ea6d35a3d8788b3a9
+        avatarUrl:
+          type: string
+          example: https://api.catenda.com/v2/avatar/5HG6j4MXMGkunK4gH2RoAM85VqcGsh9kTGCQGYgWZZMwJBcnsa0iwt1wF0LwJsjW
+        name:
+          type: string
+          example: Kristine Knight
+        username:
+          type: string
+          example: kristine.knight@example.com
+    Project:
+      required:
+        - name
+        - description
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: 989038325613499ea6d35a3d8788b3a9
+        name:
+          type: string
+          example: Old Town High School
+        description:
+          type: string
+          example: Old Town, Stavanger
+        imageUrl:
+          type: string
+          example: https://api.catenda.com/v2/projects/c729438c4f674d729fd42236783e6a12/image
+    ApiResponseOk:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+    ApiResponseError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+  securitySchemes:
+    catenda_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.catenda.com/oauth2/authorize
+          scopes:
+            write:projects: modify projects that you are administrator
+            read:projects: read projects you are a member of
