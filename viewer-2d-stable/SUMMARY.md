@@ -1,10 +1,10 @@
 # Table of contents
 
-* [Back to Home](http://127.0.0.1:5000/s/jJFCyZMZYvxNGr1IIqyo/introduction/getting-started)
+* [Back to Home](http://127.0.0.1:5000/s/jJFCyZMZYvxNGr1IIqyo/introduction/readme)
 
 ## Introduction
 
-* [Getting Started with the 2D Viewer](README.md)
+* [Getting Started](README.md)
 
 ## API
 
@@ -28,4 +28,4 @@
 ***
 
 * [OpenCDE](http://127.0.0.1:5000/s/nqstjO9HHZnyvj7tOIBG/introduction)
-* [BCF](http://127.0.0.1:5000/s/vSDRjsdtZGnUozpe09z3/introduction)
+* [BCF](http://127.0.0.1:5000/s/vSDRjsdtZGnUozpe09z3/readme)
