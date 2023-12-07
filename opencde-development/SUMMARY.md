@@ -1,6 +1,6 @@
 # Table of contents
 
-- [Back to Home](http://127.0.0.1:5000/s/jJFCyZMZYvxNGr1IIqyo/introduction/getting-started)
+- [Back to Home](http://app.gitbook.com/s/jJFCyZMZYvxNGr1IIqyo/introduction/getting-started)
 
 ## Introduction
 
@@ -21,5 +21,5 @@
 
 ---
 
-- [BCF](http://127.0.0.1:5000/s/vSDRjsdtZGnUozpe09z3/introduction)
-- [2D Viewer](http://127.0.0.1:5000/s/H6iE8cXb8IeWJRN9JR10/introduction/getting-started-with-the-2d-viewer)
+- [BCF](http://app.gitbook.com/s/vSDRjsdtZGnUozpe09z3/introduction)
+- [2D Viewer](http://app.gitbook.com/s/H6iE8cXb8IeWJRN9JR10/introduction/getting-started-with-the-2d-viewer)

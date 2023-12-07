@@ -1,6 +1,6 @@
 # Table of contents
 
-- [Back to Home](http://127.0.0.1:5000/s/jJFCyZMZYvxNGr1IIqyo/introduction/readme)
+- [Back to Home](http://app.gitbook.com/s/jJFCyZMZYvxNGr1IIqyo/introduction/readme)
 
 ## Introduction
 
@@ -58,5 +58,5 @@
 
 ---
 
-- [OpenCDE](http://127.0.0.1:5000/s/nqstjO9HHZnyvj7tOIBG/introduction)
-- [BCF](http://127.0.0.1:5000/s/vSDRjsdtZGnUozpe09z3/readme)
+- [OpenCDE](http://app.gitbook.com/s/nqstjO9HHZnyvj7tOIBG/introduction)
+- [BCF](http://app.gitbook.com/s/vSDRjsdtZGnUozpe09z3/readme)
