@@ -1,14 +1,18 @@
 # addMarker
 
+## addMarker
+
 Add a marker to specific location.
 
 **Properties**
 
-| Name   | Type                                    | Description                                             |
-| ------ | --------------------------------------- | ------------------------------------------------------- |
-| marker | [MarkerParams](#markerparams-interface) | The parameters to add a new [Marker](#marker-interface) |
+| Name   | Type         | Description                        |
+| ------ | ------------ | ---------------------------------- |
+| marker | MarkerParams | The parameters to add a new Marker |
 
 **Returns**
-Type | Description
----- | ---------
-string | The id of the new [Marker](#marker-interface)
+
+| Type   | Description              |
+| ------ | ------------------------ |
+| string | The id of the new Marker |
+
