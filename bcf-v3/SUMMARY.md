@@ -14,7 +14,7 @@
 * [Topic Extensions](api/Topic-extensions.md)
 * [Viewpoint](api/Viewpoint.md)
 * [Viewpoint Extensions](api/Viewpoint-extensions.md)
-* [API Explorer](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/markholland/catenda-openapi/main/catenda-openapi-stable-v0.1.yaml)
+* [API Explorer](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/markholland/catenda-openapi/main/catenda-openapi-stable-v0.1.yaml#/operations/listProjects)
 
 ***
 
