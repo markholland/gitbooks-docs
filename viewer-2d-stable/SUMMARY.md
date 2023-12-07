@@ -26,7 +26,7 @@
   - [loadUrl](api/methods/loadUrl.md)
   - [lookAt](api/methods/lookAt.md)
   - [lookAtBoundingBox](api/methods/lookAtBoundingBox.md)
-  - [moveto](api/methods/moveto.md)
+  - [moveto](api/methods/moveTo.md)
   - [removeMarker](api/methods/removeMarker.md)
   - [screenshot](api/methods/screenshot.md)
   - [select](api/methods/select.md)
