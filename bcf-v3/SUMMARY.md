@@ -7,13 +7,13 @@
 
 - [Comment](api/Comment.md)
 - [Document](api/Document.md)
-- [Document reference](api/Document-reference.md)
+- [Document Reference](api/Document-reference.md)
 - [Issue Board](api/Issue-Board.md)
 - [Topic](api/topic.md)
-- [Topic-Event](api/Topic-Event.md)
-- [Topic-extensions](api/Topic-extensions.md)
+- [Topic Event](api/Topic-Event.md)
+- [Topic Extensions](api/Topic-extensions.md)
 - [Viewpoint](api/Viewpoint.md)
-- [Viewpoint-extensions](api/Viewpoint-extensions.md)
+- [Viewpoint Extensions](api/Viewpoint-extensions.md)
 - [API Explorer](https://raw.githubusercontent.com/markholland/catenda-openapi/main/catenda-openapi-stable-v0.1.yaml)
 
 ---
