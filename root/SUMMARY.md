@@ -15,5 +15,4 @@
 
 * [OpenCDE](https://app.gitbook.com/s/nqstjO9HHZnyvj7tOIBG/introduction)
 * [BCF](https://app.gitbook.com/s/vSDRjsdtZGnUozpe09z3/readme)
-* [2D Viewer](https://app.gitbook.com/s/H6iE8cXb8IeWJRN9JR10/introduction/getting-started-with-the-2d-viewer)
-
+* [2D Viewer](https://app.gitbook.com/s/H6iE8cXb8IeWJRN9JR10/introduction/readme)
