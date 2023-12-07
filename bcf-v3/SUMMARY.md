@@ -16,8 +16,9 @@
 * [Viewpoint Extensions](api/Viewpoint-extensions.md)
 * [API Explorer](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/markholland/catenda-openapi/main/catenda-openapi-stable-v0.1.yaml#/operations/listProjects)
 
-***
+## Links
 
 * [OpenCDE](https://app.gitbook.com/s/nqstjO9HHZnyvj7tOIBG/introduction)
+* [BCF](https://app.gitbook.com/s/vSDRjsdtZGnUozpe09z3/readme)
 * [2D Viewer](https://app.gitbook.com/s/H6iE8cXb8IeWJRN9JR10/introduction/readme)
 
