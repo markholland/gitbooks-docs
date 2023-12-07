@@ -1,7 +1,5 @@
 # addMarker
 
-## addMarker
-
 Add a marker to specific location.
 
 **Properties**
