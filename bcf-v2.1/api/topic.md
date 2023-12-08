@@ -1,6 +1,6 @@
 # Topic
 
-Get topics
+### Get topics
 
 > Example request
 
