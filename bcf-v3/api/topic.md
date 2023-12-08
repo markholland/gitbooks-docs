@@ -1,7 +1,5 @@
 # Topic
 
-## Topic
-
 ### Get topics
 
 > Example request
