@@ -5,14 +5,13 @@
 
 ## API
 
-* [Comment](api/Comment.md)
-* [Document](api/Document.md)
-* [Document Reference](api/Document-reference.md)
-* [Issue Board](api/Issue-Board.md)
-* [Topic](api/Ttpic.md)
-* [Topic Event](api/Topic-Event.md)
-* [Topic Extensions](api/Topic-extensions.md)
-* [Viewpoint](api/Viewpoint.md)
-* [Viewpoint Extensions](api/Viewpoint-extensions.md)
+* [Comment](api/comment.md)
+* [Document](api/document.md)
+* [Document Reference](api/document-reference.md)
+* [Issue Board](api/issue-board.md)
+* [Topic](api/topic.md)
+* [Topic Event](api/topic-event.md)
+* [Topic Extensions](api/topic-extensions.md)
+* [Viewpoint](api/viewpoint.md)
+* [Viewpoint Extensions](api/viewpoint-extensions.md)
 * [API Explorer](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/markholland/catenda-openapi/main/catenda-bcf-v2.1.yaml)
-

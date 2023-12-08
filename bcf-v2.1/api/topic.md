@@ -1,13 +1,15 @@
 # Topic
 
-## Get topics 
+Get topics
 
 > Example request
+
 ```http
 GET https://api.catenda.com/opencde/bcf/3.0/projects/3c34c9b3-1b9b-4750-a4f3-0641d58fe48e/topics
 ```
 
 > Example response
+
 ```json
 [
     {
@@ -87,32 +89,30 @@ GET https://api.catenda.com/opencde/bcf/3.0/projects/3c34c9b3-1b9b-4750-a4f3-064
 
 Return the topics. Default size is 100 items, max size is 500 items. Cannot return all issue boards, so a filter is required.
 
-#### Filter, sort, skip and limit using OData
+**Filter, sort, skip and limit using OData**
 
 **Odata filter parameters**
 
-<table class="table">
-  <tr><th>Parameter</th><th>Type</th><th>Description</th><th></th></tr>
-  <tr><td>bimsync_creation_author</td><td>string</td><td>userRef of the creation author</td></tr>
-  <tr><td>creation_author</td><td>string</td><td>email of the creation author (value from extensions)</td></tr>
-  <tr><td>modified_author</td><td>string</td><td>email of the modified author (value from extensions)</td></tr>
-  <tr><td>assigned_to</td><td>string</td><td>email of the assigned person (value from extensions)</td></tr>
-  <tr><td>stage</td><td>string</td><td>stage this topic is part of (value from extensions)</td></tr>
-  <tr><td>topic_status</td><td>string</td><td>status of a topic (value from extensions)</td></tr>
-  <tr><td>topic_type</td><td>string</td><td>type of a topic (value from extensions)</td></tr>
-  <tr><td>creation_date</td><td>datetime</td><td>creation date of a topic</td></tr>
-  <tr><td>modified_date</td><td>datetime</td><td>modification date of a topic</td></tr>
-  <tr><td>labels</td><td>array (string)</td><td>labels of a topic (value from extensions)</td></tr>
-</table>
+| Parameter                 | Type           | Description                                          |   |
+| ------------------------- | -------------- | ---------------------------------------------------- | - |
+| bimsync\_creation\_author | string         | userRef of the creation author                       |   |
+| creation\_author          | string         | email of the creation author (value from extensions) |   |
+| modified\_author          | string         | email of the modified author (value from extensions) |   |
+| assigned\_to              | string         | email of the assigned person (value from extensions) |   |
+| stage                     | string         | stage this topic is part of (value from extensions)  |   |
+| topic\_status             | string         | status of a topic (value from extensions)            |   |
+| topic\_type               | string         | type of a topic (value from extensions)              |   |
+| creation\_date            | datetime       | creation date of a topic                             |   |
+| modified\_date            | datetime       | modification date of a topic                         |   |
+| labels                    | array (string) | labels of a topic (value from extensions)            |   |
 
 **OData sort parameters**
 
-<table class="table">
-  <tr><th>parameter</th><th>description</th></tr>
-  <tr><td>creation_date</td><td>creation date of a topic</td></tr>
-  <tr><td>modified_date</td><td>modification date of a topic</td></tr>
-  <tr><td>index</td><td>index of a topic</td></tr>
-</table>
+| parameter      | description                  |
+| -------------- | ---------------------------- |
+| creation\_date | creation date of a topic     |
+| modified\_date | modification date of a topic |
+| index          | index of a topic             |
 
 > Odata example requests
 
@@ -134,14 +134,16 @@ GET https://api.catenda.com/opencde/bcf/3.0/projects/F445F4F2-4D02-4B2A-B612-5E4
 GET https://api.catenda.com/opencde/bcf/3.0/projects/F445F4F2-4D02-4B2A-B612-5E456BEF9137/topics?$top=50&$skip=100
 ```
 
-### Select
+#### Select
 
 > Example request with select
+
 ```http
 GET https://api.catenda.com/opencde/bcf/3.0/projects/3c34c9b3-1b9b-4750-a4f3-0641d58fe48e/topics?$select=creation_date,modified_date,assigned_to
 ```
 
 > Example response with select
+
 ```json
 [
     {
@@ -181,36 +183,36 @@ GET https://api.catenda.com/opencde/bcf/3.0/projects/3c34c9b3-1b9b-4750-a4f3-064
 ]
 ```
 
-Use **$select** as a query parameter to choose which properties to include in the response. **guid**, **server_assigned_id** and **bimsync_issue_number** are always returned in addition.
+Use **$select** as a query parameter to choose which properties to include in the response. **guid**, **server\_assigned\_id** and **bimsync\_issue\_number** are always returned in addition.
 
-<table class="table">
-  <tr><th>Parameter</th><th>Returns</th></tr>
-  <tr><td>*</td><td>all default fields</td></tr>
-  <tr><td>title</td><td>title</td></tr>
-  <tr><td>description</td><td>description</td></tr>
-  <tr><td>index</td><td>index</td></tr>
-  <tr><td>labels</td><td>labels</td></tr>
-  <tr><td>due_date</td><td>due_date</td></tr>
-  <tr><td>stage</td><td>stage</td></tr>
-  <tr><td>creation_author</td><td>creation_author, bimsync_creation_author</td></tr>
-  <tr><td>creation_date</td><td>creation_date, bimsync_imported_at</td></tr>
-  <tr><td>modified_date</td><td>modified_date</td></tr>
-  <tr><td>modified_author</td><td>modified_author</td></tr>
-  <tr><td>assigned_to, bimsync_assigned_to</td><td>assigned_to, bimsync_assigned_to</td></tr>
-  <tr><td>topic_status</td><td>topic_status</td></tr>
-  <tr><td>topic_type</td><td>topic_type</td></tr>
-  <tr><td>topic_priority</td><td>topic_priority</td></tr>
-  <tr><td>reference_links</td><td>reference_links</td></tr>
-  <tr><td>bim_snippet</td><td>bim_snippet</td></tr>
-  <tr><td>bimsync_comments_size</td><td>bimsync_comments_size</td></tr>
-  <tr><td>bimsync_requester</td><td>bimsync_requester</td></tr>
-  <tr><td>bimsync_custom_fields</td><td>bimsync_custom_fields</td></tr>
-  <tr><td>bimsync_points</td><td>bimsync_points</td></tr>
-</table>
+| Parameter                           | Returns                                     |
+| ----------------------------------- | ------------------------------------------- |
+| \*                                  | all default fields                          |
+| title                               | title                                       |
+| description                         | description                                 |
+| index                               | index                                       |
+| labels                              | labels                                      |
+| due\_date                           | due\_date                                   |
+| stage                               | stage                                       |
+| creation\_author                    | creation\_author, bimsync\_creation\_author |
+| creation\_date                      | creation\_date, bimsync\_imported\_at       |
+| modified\_date                      | modified\_date                              |
+| modified\_author                    | modified\_author                            |
+| assigned\_to, bimsync\_assigned\_to | assigned\_to, bimsync\_assigned\_to         |
+| topic\_status                       | topic\_status                               |
+| topic\_type                         | topic\_type                                 |
+| topic\_priority                     | topic\_priority                             |
+| reference\_links                    | reference\_links                            |
+| bim\_snippet                        | bim\_snippet                                |
+| bimsync\_comments\_size             | bimsync\_comments\_size                     |
+| bimsync\_requester                  | bimsync\_requester                          |
+| bimsync\_custom\_fields             | bimsync\_custom\_fields                     |
+| bimsync\_points                     | bimsync\_points                             |
 
-### Resource URL
+#### Resource URL
 
 `https://api.catenda.com/opencde/bcf/{version_id}/projects/{project_id}/topics`
 
-### Response schema
-List of [topic_GET.json](https://github.com/buildingSMART/BCF-API/blob/release_3_0/Schemas_draft-03/Collaboration/Topic/topic_GET.json)
+#### Response schema
+
+List of [topic\_GET.json](https://github.com/buildingSMART/BCF-API/blob/release\_3\_0/Schemas\_draft-03/Collaboration/Topic/topic\_GET.json)
