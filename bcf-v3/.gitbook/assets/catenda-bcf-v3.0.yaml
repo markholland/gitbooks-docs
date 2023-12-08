@@ -1,0 +1,861 @@
+openapi: 3.0.3
+info:
+  title: BCF OpenAPI Specification
+  version: "3.0"
+servers:
+  - url: https://api.catenda.com/opencde/bcf/3.0
+tags:
+  - name: topic
+  - name: comment
+  - name: document
+  - name: issue-board
+paths:
+  /projects:
+    get:
+      tags:
+        - issue-board
+      summary: Get issue boards
+      operationId: listProjects
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Issue Board'
+      security:
+        - catenda_auth:
+            - write:projects
+            - read:projects
+    post:
+      tags:
+        - issue-board
+      summary: Create issue board
+      operationId: addProject
+      requestBody:
+        description: Create a new issue board
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Issue Board'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue Board'          
+      security:
+        - catenda_auth:
+            - write:projects
+            - read:projects
+  /projects/{project}:
+    get:
+      tags:
+        - issue-board
+      summary: Get issue board
+      operationId: getProject
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue Board'
+        '404':
+          description: Project (:project) not found
+      security:
+        - catenda_auth:  
+            - write:project
+            - read:project
+    put:
+      tags:
+        - issue-board
+      summary: Update issue board
+      operationId: updateProject
+      parameters:
+        - name: project
+          in: path
+          description: ID of project that needs to be deleted
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update an existing project
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Issue Board'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Issue Board'
+        '403':
+          description: Insufficient privilege
+        '404':
+          description: Project (:project) not found
+        '422':
+          description: Message from input validation
+      security:
+        - catenda_auth:
+            - write:projects
+            - read:projects
+  /projects/{project}/topics:
+    get:
+      tags:
+        - topic
+      summary: Get topics
+      operationId: getTopics
+      parameters:
+        - name: project
+          in: path
+          description: ID of project topics belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Topic'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+    post:
+      tags:
+        - topic
+      summary: Add topic
+      operationId: addTopic
+      parameters:
+        - name: project
+          in: path
+          description: ID of project topic will belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new topic
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Topic'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Insufficient privilege:
+                  value:
+                    code: 100
+                    message: Insufficient privilege
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+  /projects/{project}/topics/{topic}:
+    get:
+      tags:
+        - topic
+      summary: Get topic
+      operationId: getTopic
+      parameters:
+        - name: project
+          in: path
+          description: ID of project topic belongs to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: topic
+          in: path
+          description: ID of topic to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Topic not found:
+                  value:
+                    code: 20
+                    message: Topic (:topic) not found
+    put:
+      tags:
+        - topic
+      summary: Update topic
+      operationId: updateMember
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: topic
+          in: path
+          description: ID of topic to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update a topic
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Topic'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Topic'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Topic not found:
+                  value:
+                    code: 20
+                    message: Topic (:topic) not found
+    delete:
+      tags:
+        - topic
+      summary: Delete topic
+      operationId: deleteTopic
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: topic
+          in: path
+          description: ID of topic to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Topic not found:
+                  value:
+                    code: 20
+                    message: Topic (:topic) not found
+  /projects/{project}/topics/{topic}/comments:
+    get:
+      tags:
+        - comment
+      summary: Get comments
+      operationId: getComments
+      parameters:
+        - name: project
+          in: path
+          description: ID of project comments belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: topic
+          in: path
+          description: ID of topic comment belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Comment'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Topic not found:
+                  value:
+                    code: 20
+                    message: Topic (:topic) not found
+    post:
+      tags:
+        - comment
+      summary: Add comment
+      operationId: addComment
+      parameters:
+        - name: project
+          in: path
+          description: ID of project comment will belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: topic
+          in: path
+          description: ID of topic comment belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Create a new comment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Insufficient privilege:
+                  value:
+                    code: 100
+                    message: Insufficient privilege
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Topic not found:
+                  value:
+                    code: 20
+                    message: Topic (:topic) not found
+  /projects/{project}/topics/{topic}/comments/{comment}:
+    get:
+      tags:
+        - comment
+      summary: Get comment
+      operationId: getComment
+      parameters:
+        - name: project
+          in: path
+          description: ID of project topic belongs to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: topic
+          in: path
+          description: ID of topic comment belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Topic not found:
+                  value:
+                    code: 20
+                    message: Topic (:topic) not found
+    put:
+      tags:
+        - comment
+      summary: Update comment
+      operationId: updateComment
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: topic
+          in: path
+          description: ID of topic comment belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Update a comment
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Comment'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Topic not found:
+                  value:
+                    code: 20
+                    message: Topic (:topic) not found
+    delete:
+      tags:
+        - comment
+      summary: Delete comment
+      operationId: deleteModel
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: topic
+          in: path
+          description: ID of topic comment belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Topic not found:
+                  value:
+                    code: 20
+                    message: Topic (:topic) not found
+  /projects/{project}/documents:
+    get:
+      tags:
+        - document
+      summary: Get documents
+      operationId: getDocuments
+      parameters:
+        - name: project
+          in: path
+          description: ID of project documents belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Document'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+    post:
+      tags:
+        - document
+      summary: Add document
+      operationId: addDocument
+      parameters:
+        - name: project
+          in: path
+          description: ID of project document will belong to
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Creates a new document.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+        required: true
+      responses:
+        '200':
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '403':
+          description: Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Insufficient privilege:
+                  value:
+                    code: 100
+                    message: Insufficient privilege
+        '404':
+          description: Not Found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+  /projects/{project}/documents/{document}:
+    get:
+      tags:
+        - document
+      summary: Get document
+      operationId: getDocument
+      parameters:
+        - name: project
+          in: path
+          description: ID of project document belongs to
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: document
+          in: path
+          description: ID of document to return
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Project not found:
+                  value:
+                    code: 20
+                    message: Project (:project) not found
+                Document not found:
+                  value:
+                    code: 20
+                    message: Document (:document) not found
+    put:
+      tags:
+        - document
+      summary: Update document
+      operationId: updateDocument
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: document
+          in: path
+          description: ID of document to update
+          required: true
+          schema:
+            type: integer
+            format: int64
+      requestBody:
+        description: Creates a new document.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Document'
+        required: true
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                document not found:
+                  value:
+                    code: 20
+                    message: Document (:document) not found
+    delete:
+      tags:
+        - document
+      summary: Delete document
+      operationId: deleteDocument
+      parameters:
+        - name: project
+          in: path
+          description: ID of project to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+        - name: document
+          in: path
+          description: ID of document to delete
+          required: true
+          schema:
+            type: integer
+            format: int64
+      responses:
+        '200':
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Document'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiResponseError'
+              examples:
+                Document not found:
+                  value:
+                    code: 20
+                    message: Document (:document) not found
+components:
+  schemas:
+    Comment:
+      required:
+        - comment
+        - author
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: dr346f5422
+        comment:
+          type: string
+          example: A comment!
+        author:
+          type: string
+          example: king@test.com
+    Document:
+      required:
+        - filename
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: d746f5422
+        filename:
+          type: string
+          example: Myfile.txt
+    Topic:
+      required:
+        - title
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: c729438c4
+        title:
+          type: string
+          example: Door issue
+        topic_type:
+          type: string
+          example: Error
+        topic_status:
+          type: string
+          example: Open
+    Issue Board:
+      required:
+        - name
+      type: object
+      properties:
+        id:
+          type: integer
+          format: int64
+          example: c729438c4
+        title:
+          type: name
+          example: My BCF project
+    ApiResponseOk:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+        type:
+          type: string
+        message:
+          type: string
+    ApiResponseError:
+      type: object
+      properties:
+        error:
+          type: object
+          properties:
+            code:
+              type: integer
+              format: int32
+            message:
+              type: string
+  securitySchemes:
+    catenda_auth:
+      type: oauth2
+      flows:
+        implicit:
+          authorizationUrl: https://api.catenda.com/oauth2/authorize
+          scopes:
+            write:projects: modify projects
+            read:projects: read projects
