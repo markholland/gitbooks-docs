@@ -16,4 +16,4 @@
 
 ## Resources
 
-* [Error codes](resources/error-codes.md)
+* [Error Codes](resources/error-codes.md)
