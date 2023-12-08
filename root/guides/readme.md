@@ -1,6 +1,6 @@
 # Integration Examples
 
-Tabs for multiple formats of an example
+## Tabs for multiple formats of an example
 
 {% tabs %}
 {% tab title="Curl" %}
@@ -24,7 +24,7 @@ fetch(
 {% endtab %}
 {% endtabs %}
 
-#### JSON
+## JSON
 
 {% code title="Response" %}
 ```json
@@ -53,13 +53,13 @@ fetch(
 ```
 {% endcode %}
 
-#### Admonitions
+## Admonitions
 
 {% hint style="danger" %}
 An important warning about unexpected behaviour you should be aware of
 {% endhint %}
 
-#### OpenAPI definition
+## OpenAPI definition
 
 {% swagger method="get" path="" baseUrl="https://api.catenda.com/v2/projects/:project/members/:user" summary="Get a project member." %}
 {% swagger-description %}
@@ -83,10 +83,10 @@ ID of the user
 {% endswagger-response %}
 {% endswagger %}
 
-#### Postman
+## Postman
 
 [![Run In Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/:collection\_id)
 
-#### GitHub Gist
+## GitHub Gist
 
 {% embed url="https://gist.github.com/markholland/5f910b58ae9412fd78ac5c2be4cf398b" %}
