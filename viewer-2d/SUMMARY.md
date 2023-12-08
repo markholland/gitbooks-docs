@@ -53,5 +53,5 @@
 
 ## Resources
 
-* [Samples](resources/samples.md)
-* [Examples](resources/resources.md)
+* [CodePen Samples](resources/samples.md)
+* [Code Examples](resources/resources.md)
