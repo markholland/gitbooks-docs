@@ -9,7 +9,7 @@
 * [Document](api/Document.md)
 * [Document Reference](api/Document-reference.md)
 * [Issue Board](api/Issue-Board.md)
-* [Topic](api/Topic.md)
+* [Topic](api/Ttpic.md)
 * [Topic Event](api/Topic-Event.md)
 * [Topic Extensions](api/Topic-extensions.md)
 * [Viewpoint](api/Viewpoint.md)
