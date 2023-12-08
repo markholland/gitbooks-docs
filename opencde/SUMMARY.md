@@ -13,3 +13,7 @@
 * [Models](api/models.md)
 * [Labels](api/labels.md)
 * [API Explorer](https://elements-demo.stoplight.io/?spec=https://raw.githubusercontent.com/markholland/catenda-openapi/main/catenda-openapi-stable-v0.1.yaml)
+
+## Resources
+
+* [Error Codes](resources/error-codes.md)
