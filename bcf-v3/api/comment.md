@@ -1,6 +1,6 @@
 # Comment
 
-### Create comment
+## Create comment
 
 > Example request
 
@@ -27,24 +27,40 @@ POST https://api.catenda.com/opencde/bcf/3.0/projects/5af9e867-659d-4eee-ae56-23
 
 Create the comment.
 
-#### Resource URL
+### Resource URL
 
 `https://api.catenda.com/opencde/bcf/{version_id}/projects/{project_id}/topics/{topic_guid}/comments`
 
-#### Parameters
+### Parameters
 
 JSON encoded body using the "application/json" content type.
 
-| Name            | Type   | Description                   | Required                                                        |
-| --------------- | ------ | ----------------------------- | --------------------------------------------------------------- |
-| guid            | string | the guid of the comment       | Optional, if set: requires the guid not to exist in the project |
-| comment         | string | the comment                   | Mandatory                                                       |
-| viewpoint\_guid | string | guid of an existing viewpoint | Optional                                                        |
+<table class="table">
+    <tr><th>Name</th><th>Type</th><th>Description</th><th>Required</th></tr>
+    <tr>
+        <td>guid</td>
+        <td>string</td>
+        <td>the guid of the comment</td>
+        <td>Optional, if set: requires the guid not to exist in the project</td>
+    </tr>
+    <tr>
+        <td>comment</td>
+        <td>string</td>
+        <td>the comment</td>
+        <td>Mandatory</td>
+    </tr>
+    <tr>
+        <td>viewpoint_guid</td>
+        <td>string</td>
+        <td>guid of an existing viewpoint</td>
+        <td>Optional</td>
+    </tr>
+</table>
 
-#### Request schema
+### Request schema
 
-[comment\_POST.json](https://github.com/buildingSMART/BCF-API/blob/release\_3\_0/Schemas\_draft-03/Collaboration/Comment/comment\_POST.json)
+[comment_POST.json](https://github.com/buildingSMART/BCF-API/blob/release_3_0/Schemas_draft-03/Collaboration/Comment/comment_POST.json)
 
-#### Response schema
+### Response schema
 
-[comment\_GET.json](https://github.com/buildingSMART/BCF-API/blob/release\_3\_0/Schemas\_draft-03/Collaboration/Comment/comment\_GET.json)
+[comment_GET.json](https://github.com/buildingSMART/BCF-API/blob/release_3_0/Schemas_draft-03/Collaboration/Comment/comment_GET.json)
