@@ -1,26 +1,6 @@
-# Examples
+# Integration Examples
 
-{% swagger method="get" path="" baseUrl="https://api.catenda.com/v2/projects/:project/members" summary="List project members." %}
-{% swagger-description %}
-​
-{% endswagger-description %}
-
-{% swagger-parameter in="path" name="project" required="true" %}
-ID of the project
-{% endswagger-parameter %}
-
-{% swagger-parameter in="query" name="userType" %}
-Filter by userType. Accepts the values 'user', 'team' or 'organization'
-{% endswagger-parameter %}
-
-{% swagger-response status="200: OK" description="" %}
-
-{% endswagger-response %}
-
-{% swagger-response status="404: Not Found" description="Project (:project) not found" %}
-
-{% endswagger-response %}
-{% endswagger %}
+Tabs for multiple formats of an example
 
 {% tabs %}
 {% tab title="Curl" %}
@@ -43,6 +23,8 @@ fetch(
 ```
 {% endtab %}
 {% endtabs %}
+
+#### JSON
 
 {% code title="Response" %}
 ```json
@@ -71,9 +53,13 @@ fetch(
 ```
 {% endcode %}
 
+#### Admonitions
+
 {% hint style="danger" %}
 An important warning about unexpected behaviour you should be aware of
 {% endhint %}
+
+#### OpenAPI definition
 
 {% swagger method="get" path="" baseUrl="https://api.catenda.com/v2/projects/:project/members/:user" summary="Get a project member." %}
 {% swagger-description %}
@@ -97,17 +83,10 @@ ID of the user
 {% endswagger-response %}
 {% endswagger %}
 
-```json
-{
-    "role": "owner",
-    "user": {
-        "avatarUrl": "https://api.catenda.com/v2/avatar/Q4g778jIuQy40X4jaqF7"
-        "createdAt": "2016-09-20T14:32:25Z",
-        "id": "b8dd966cb6d844d3bbaa2705d9e7d980",
-        "name": "Kristine Knight",
-        "username": "kristine.knight@example.com"
-    }
-}
-```
+#### Postman
 
 [![Run In Postman](https://run.pstmn.io/button.svg)](https://god.gw.postman.com/run-collection/:collection\_id)
+
+#### GitHub Gist
+
+{% embed url="https://gist.github.com/markholland/5f910b58ae9412fd78ac5c2be4cf398b" %}

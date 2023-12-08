@@ -9,4 +9,4 @@
 ## Guides
 
 * [Samples](guides/samples.md)
-* [Examples](guides/readme.md)
+* [Integration Examples](guides/readme.md)
