@@ -8,6 +8,7 @@
 
 ## API
 
+* [OpenAPI](api/openapi.md)
 * [Projects](api/projects.md)
 * [Members](api/members.md)
 * [Models](api/models.md)

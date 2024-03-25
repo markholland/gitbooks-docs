@@ -1,0 +1,1459 @@
+openapi: 3.0.3
+info:
+  title: API Reference
+  version: '1.0'
+externalDocs:
+  description: Find out more about the Catenda API
+  url: 'https://apidocs.dev.catenda.net/catenda-api'
+servers:
+  - url: 'https://api.catenda.com/v2'
+tags:
+  - name: Label
+  - name: Label Group
+  - name: Member
+  - name: Model
+  - name: Model Revision
+  - name: Project
+  - name: Organization
+  - name: Team
+security:
+  - Bearer: []
+paths:
+  '/projects/{project-id}/labels':
+    get:
+      tags:
+        - Label
+      summary: List labels
+      operationId: getLabels
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/label-include'
+        - name: search
+          in: query
+          description: Filter by label name
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: |
+            Filter by label ids providing a comma separated list
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/label'
+    post:
+      tags:
+        - Label
+      summary: Create label
+      operationId: createLabel
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/label-include'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - color
+              properties:
+                name:
+                  type: string
+                  description: The name of the label
+                  example: Label 1
+                color:
+                  type: string
+                  description: Valid RGB hexadecimal color of the label
+                  example: '#6aa84f'
+                labelGroupId:
+                  type: string
+                  description: Id of label group to assign to the label
+                  example: 397t0ccc8f74619096c738de15dc6512
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label'
+  '/projects/{project-id}/labels/{label-id}':
+    get:
+      tags:
+        - Label
+      summary: Get label
+      operationId: getLabel
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/label-id'
+        - $ref: '#/components/parameters/label-include'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label'
+    patch:
+      tags:
+        - Label
+      summary: Update label
+      operationId: updateLabel
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/label-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the label
+                  example: Label 1
+                color:
+                  type: string
+                  description: Valid RGB hexadecimal color of the label
+                  example: '#6aa84f'
+                labelGroupId:
+                  type: string
+                  description: |
+                    Id of label group to assign the label to, provide null as value to remove label from current group.
+                deleted:
+                  type: boolean
+                  description: Soft deletion state of the label
+                  example: false
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label'
+    delete:
+      tags:
+        - Label
+      summary: Delete label
+      operationId: deleteLabel
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/label-id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+  '/projects/{project-id}/labels/label-groups':
+    get:
+      tags:
+        - Label Group
+      summary: List label groups
+      operationId: getLabelGroups
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - name: search
+          in: query
+          description: Filter by label group name
+          schema:
+            type: string
+        - name: id
+          in: query
+          description: Filter by label group ids providing a comma separated list
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/label-group'
+    post:
+      tags:
+        - Label Group
+      summary: Create label group
+      operationId: createLabelGroup
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: The name of the label group
+                  example: Group name
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label-group'
+  '/projects/{project-id}/labels/label-groups/{label-group-id}':
+    get:
+      tags:
+        - Label Group
+      summary: Get label group
+      operationId: getLabelGroup
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/label-group-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label-group'
+    patch:
+      tags:
+        - Label Group
+      summary: Update label group
+      operationId: updateLabelGroup
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/label-group-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the label group
+                  example: Group name
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/label-group'
+    delete:
+      tags:
+        - Label Group
+      summary: Delete label group
+      operationId: deleteLabelGroup
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/label-group-id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+  '/projects/{project-id}/members':
+    get:
+      tags:
+        - Member
+      summary: List members
+      operationId: getMembers
+      description: List project members
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - name: userType
+          in: query
+          description: |
+            Filter by user type, valid values are `user`, `team` or `organization`
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/member'
+    post:
+      tags:
+        - Member
+      summary: Create member
+      operationId: createMember
+      description: |
+        Add a project member.
+
+        The current user must be an administrator of the project.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user
+                - role
+              properties:
+                user:
+                  type: string
+                  description: The user id for the new member
+                  example: 973763399e2147dceg4a4a0661e03a26
+                role:
+                  type: string
+                  description: |
+                    Role of the member, valid values are:
+                      - administrator
+                      - member
+                  example: member
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+  '/projects/{project-id}/members/{user-id}':
+    get:
+      tags:
+        - Member
+      summary: Get member
+      operationId: getMember
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/user-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+    put:
+      tags:
+        - Member
+      summary: Update member
+      operationId: updateMember
+      description: |
+        Update project membership.
+
+        The current user must be a project administrator.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/user-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  description: |
+                    Role of the member, valid values are:
+                      - administrator
+                      - member
+                  example: member
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+    delete:
+      tags:
+        - Member
+      summary: Remove member
+      operationId: deleteMember
+      description: |
+        Remove a project member.
+
+        The current user must be a project administrator.
+
+        The project owner cannot be removed from the project.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/user-id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+  '/projects/{project-id}/models':
+    get:
+      tags:
+        - Model
+      summary: List models
+      operationId: getModels
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/model'
+    post:
+      tags:
+        - Model
+      summary: Create model
+      operationId: createModel
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the model, limited to 512 characters'
+                  example: Model 1
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model'
+  '/projects/{project-id}/models/{model-id}':
+    get:
+      tags:
+        - Model
+      summary: Get model
+      operationId: getModel
+      description: |
+        Download the latest revision of a model as an IFC file setting the `Accept` header to be `application/ifc`
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/model-id'
+        - $ref: '#/components/parameters/model-normalize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model'
+            application/ifc:
+              schema:
+                type: string
+                format: ifc
+    put:
+      tags:
+        - Model
+      summary: Update model
+      operationId: updateModel
+      description: |
+        Update a model.
+
+        The current user must be an administrator of the project.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/model-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the model, limited to 512 characters'
+                  example: Model 1
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model'
+    delete:
+      tags:
+        - Model
+      summary: Delete model
+      operationId: deleteModel
+      description: |
+        Delete a model.
+
+        The current user must be an administrator of the project.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/model-id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+  '/projects/{project-id}/revisions':
+    get:
+      tags:
+        - Model Revision
+      summary: List revisions
+      operationId: getRevisions
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/model-revision-model'
+        - $ref: '#/components/parameters/model-revision-product'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/model-revision'
+    post:
+      tags:
+        - Model Revision
+      summary: Create revision
+      operationId: createRevision
+      description: |
+        Upload a new model revision.
+
+        Include the IFC file in the request and set the `Content-Type` header to be `application/ifc`
+
+        **Note:** The code examples for this method may have incorrect headers.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - in: header
+          name: Bimsync-Params
+          schema:
+            type: object
+            required:
+              - comment
+            properties:
+              callbackUri:
+                type: string
+                description: |
+                  Pass a URI to be notified when the revision is processed.
+
+                  Catenda will issue an HTTP GET request with the query parameter token set to revision status Id and result set to either 'success' or 'error'.
+                example: 'https://example.com'
+              comment:
+                type: string
+                description: 'Text describing the revision, limited to 64K characters'
+                example: Revision description
+              filename:
+                type: string
+                description: |
+                  The original name of the IFC file.
+
+                  The name is used in format detection and should have the extension .ifc, .ifcZIP or .ifcXML.
+                example: ARCH.ifc
+              model:
+                type: string
+                description: Id of the model the revision should be added to.
+                example: 37024671cbd642a9b7d84808b4d509f5
+          required: true
+      requestBody:
+        content:
+          application/ifc:
+            schema:
+              type: string
+              format: binary
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model-revision-status'
+  '/projects/{project-id}/revisions/{model-revision-id}':
+    get:
+      tags:
+        - Model Revision
+      summary: Get revision
+      operationId: getRevision
+      description: |
+        Download the IFC revision by setting the `Accept` header to be `application/ifc`
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/model-revision-id'
+        - $ref: '#/components/parameters/model-normalize'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/model-revision'
+            application/ifc:
+              schema:
+                type: string
+                format: ifc
+  '/projects/{project-id}/revision_status/{model-revision-status-id}':
+    get:
+      tags:
+        - Model Revision
+      summary: Get revision status
+      operationId: getRevisionStatus
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/model-revision-status-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/model-revision-status'
+  /projects:
+    get:
+      tags:
+        - Project
+      summary: List projects
+      operationId: getProjects
+      description: List all projects the current user is a member of.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/project'
+    post:
+      tags:
+        - Project
+      summary: Create project
+      operationId: createProject
+      description: |
+        Create a new project.
+
+        The project will be owned by the current user.
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - description
+                - name
+              properties:
+                description:
+                  type: string
+                  description: 'A short text describing the project, limited to 1024 characters'
+                  example: Project description
+                name:
+                  type: string
+                  description: 'The name of the project, limited to 512 characters'
+                  example: Project name
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+  '/projects/{project-id}':
+    get:
+      tags:
+        - Project
+      summary: Get project
+      operationId: getProject
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+    put:
+      tags:
+        - Project
+      summary: Update project
+      operationId: updateProject
+      description: |
+        Update a project.
+
+        The current user must be an administrator of the project.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                description:
+                  type: string
+                  description: 'A short text describing the project, limited to 1024 characters'
+                  example: Project description
+                name:
+                  type: string
+                  description: 'The name of the project, limited to 512 characters'
+                  example: Project name
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+    delete:
+      tags:
+        - Project
+      summary: Delete project
+      operationId: deleteProject
+      description: |
+        Delete a project.
+
+        The current user must be the owner of the project.
+
+        If the project is owned by an organization, the user must be an owner of the organization.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+  /orgs:
+    get:
+      tags:
+        - Organization
+      summary: List organizations
+      operationId: getOrganizations
+      description: List all organizations the current user is a member of.
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/user'
+  '/orgs/{organization-id}':
+    get:
+      tags:
+        - Organization
+      summary: Get organization
+      operationId: getOrganization
+      description: |
+        Get a single organization.
+
+        The current user must be a member of the organization.
+      parameters:
+        - $ref: '#/components/parameters/organization-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+    put:
+      tags:
+        - Organization
+      summary: Update organization
+      operationId: updateOrganization
+      description: |
+        Update an organization.
+
+        The current user must be an owner of the organization.
+      parameters:
+        - $ref: '#/components/parameters/organization-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: 'The name of the organization, limited to 128 characters'
+                  example: Organization name
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/user'
+  '/orgs/{organization-id}/members':
+    get:
+      tags:
+        - Organization
+      summary: List members
+      operationId: getOrganizationMembers
+      description: |
+        List organization members.
+
+        The current user must be a member of the organization.
+      parameters:
+        - $ref: '#/components/parameters/organization-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/member'
+    post:
+      tags:
+        - Organization
+      summary: Add member
+      operationId: addOrganizationMember
+      description: |
+        Add an organization member.
+
+        The current user must be an owner of the organization.
+      parameters:
+        - $ref: '#/components/parameters/organization-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user
+                - role
+              properties:
+                user:
+                  type: string
+                  description: Id of the user
+                  example: 697t0czc8f74614096c758dr15dc6512
+                role:
+                  type: string
+                  description: |
+                    Role of the member, valid values are:
+                      - owner
+                      - member
+                  example: member
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+  '/orgs/{organization-id}/members/{user-id}':
+    get:
+      tags:
+        - Organization
+      summary: Get member
+      operationId: getOrganizationMember
+      description: |
+        Get organization member.
+
+        The current user must be a member of the organization.
+      parameters:
+        - $ref: '#/components/parameters/organization-id'
+        - $ref: '#/components/parameters/user-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+    put:
+      tags:
+        - Organization
+      summary: Update member
+      operationId: updateOrganizationMember
+      description: |
+        Update an organization membership.
+
+        The current user must be an owner of the organization.
+      parameters:
+        - $ref: '#/components/parameters/organization-id'
+        - $ref: '#/components/parameters/user-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                role:
+                  type: string
+                  description: |
+                    The role of the member, valid values are:
+                      - owner
+                      - member
+                  example: Organization name
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+    delete:
+      tags:
+        - Organization
+      summary: Remove member
+      operationId: removeOrganizationMember
+      description: |
+        Remove an organization member. The current user must be an owner of the organization to remove other members.
+
+        There must be at least one other owner in the organization when removing the current user.
+      parameters:
+        - $ref: '#/components/parameters/organization-id'
+        - $ref: '#/components/parameters/user-id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+  '/orgs/{organization-id}/projects':
+    post:
+      tags:
+        - Organization
+      summary: Create project
+      operationId: createOrganizationProject
+      description: |
+        Create a new project. 
+
+        The current user must be an owner of the organization. 
+
+        The project will be owned by the organization and count towards the owners project limit.
+      parameters:
+        - $ref: '#/components/parameters/organization-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - description
+                - name
+              properties:
+                description:
+                  type: string
+                  description: 'A short text describing the project, limited to 1024 characters'
+                  example: Project description
+                name:
+                  type: string
+                  description: 'The name of the project, limited to 512 characters'
+                  example: Project name
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/project'
+  '/projects/{project-id}/teams':
+    post:
+      tags:
+        - Team
+      summary: Create team
+      operationId: createTeam
+      description: |
+        Add a project team.
+
+        The current user must be an administrator of the project.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - name
+                - role
+              properties:
+                name:
+                  type: string
+                  description: The name of the team
+                  example: Team name
+                role:
+                  type: string
+                  description: |
+                    Role of the team, valid values are:
+                      - administrator
+                      - member
+                  example: member
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+  '/projects/{project-id}/teams/{team-id}':
+    get:
+      tags:
+        - Team
+      summary: Get team
+      operationId: getTeam
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/team-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+    patch:
+      tags:
+        - Team
+      summary: Update team
+      operationId: updateTeam
+      description: |
+        Update project membership for the team.
+
+        The current user must be a project administrator.
+
+        The members of the team will receive any updated roles.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/team-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                  description: The name of the team
+                  example: Team name
+                role:
+                  type: string
+                  description: |
+                    Role of the team, valid values are:
+                      - administrator
+                      - member
+                  example: member
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+    delete:
+      tags:
+        - Team
+      summary: Remove team
+      operationId: deleteTeam
+      description: |
+        Remove a project team.
+
+        The current user must be a project administrator.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/team-id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+  '/projects/{project-id}/teams/{team-id}/members':
+    get:
+      tags:
+        - Team
+      summary: List members
+      operationId: getTeamMembers
+      description: Lists the members of a team.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/team-id'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/member'
+    post:
+      tags:
+        - Team
+      summary: Add member
+      operationId: createTeamMember
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/team-id'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - user
+              properties:
+                user:
+                  type: string
+                  description: Id of the user to be added to the team
+                  example: e1e20bcced654fc9462e3206325d649e
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/member'
+  '/projects/{project-id}/teams/{team-id}/members/{user-id}':
+    delete:
+      tags:
+        - Team
+      summary: Remove member
+      operationId: deleteTeamMember
+      description: |
+        Removes a user from the team.
+
+        The current user must be a project administrator.
+      parameters:
+        - $ref: '#/components/parameters/project-id'
+        - $ref: '#/components/parameters/team-id'
+        - $ref: '#/components/parameters/user-id'
+      responses:
+        '204':
+          $ref: '#/components/responses/204'
+components:
+  parameters:
+    label-group-id:
+      name: label-group-id
+      in: path
+      required: true
+      description: Id of label group
+      schema:
+        type: string
+    label-id:
+      name: label-id
+      in: path
+      required: true
+      description: Id of label
+      schema:
+        type: string
+    model-id:
+      name: model-id
+      in: path
+      required: true
+      description: Id of the model
+      schema:
+        type: string
+    model-revision-id:
+      name: model-revision-id
+      in: path
+      required: true
+      description: Id of the model revision
+      schema:
+        type: string
+    model-revision-status-id:
+      name: model-revision-status-id
+      in: path
+      required: true
+      description: Id of the model revision status
+      schema:
+        type: string
+    organization-id:
+      name: organization-id
+      in: path
+      required: true
+      description: Id of the organization
+      schema:
+        type: string
+    project-id:
+      name: project-id
+      in: path
+      required: true
+      description: Id of the project
+      schema:
+        type: string
+    team-id:
+      name: team-id
+      in: path
+      required: true
+      description: Id of the team
+      schema:
+        type: string
+    user-id:
+      name: user-id
+      in: path
+      required: true
+      description: Id of the user
+      schema:
+        type: string
+    label-include:
+      name: include
+      in: query
+      description: |
+        Use value `group` to include associated label group in the result
+      schema:
+        type: string
+    model-normalize:
+      name: normalize
+      in: query
+      description: |
+        Applies to IFC downloads. By default, STEP instance names correspond to their Catenda object id, by setting `true` the STEP instance names will instead start at #1.
+      schema:
+        type: string
+    model-revision-model:
+      name: model
+      in: query
+      description: Filter by model id
+      schema:
+        type: string
+    model-revision-product:
+      name: product
+      in: query
+      description: Filter by the object Id of an IFC product
+      schema:
+        type: string
+  responses:
+    '204':
+      description: No Content
+  schemas:
+    error:
+      type: object
+      properties:
+        code:
+          type: integer
+          description: The error code
+        message:
+          type: string
+          description: The error message
+    label:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the label
+          example: 397t0ccc8f74619096c738de15dc6512
+        name:
+          type: string
+          description: Name of the label
+          example: Label 1
+        color:
+          type: string
+          description: Valid RGB hexadecimal color of the label
+          example: '#6aa84f'
+        group:
+          $ref: '#/components/schemas/label-group'
+        deleted:
+          type: boolean
+          description: Soft deletion state of the label
+          example: false
+    label-group:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Id of the label group
+          example: 357t0ccc8f74719096c734de18fc6512
+        name:
+          type: string
+          description: Name of the label group
+          example: Group name
+    member:
+      type: object
+      properties:
+        role:
+          type: string
+          description: |
+            Valid values are:
+              - owner
+              - administrator
+              - member
+          example: member
+        user:
+          $ref: '#/components/schemas/user'
+    model:
+      type: object
+      description: |
+        Represents an IFC model as a set of Revisions.
+
+        A large building project can contain multiple IFC models.
+
+        They are often divided by domain (architecture, electrical, etc.)
+      properties:
+        id:
+          type: string
+          description: 'A unique identifier for a model, represented as compacted UUID using 32 hexadecimal characters'
+          example: 47024671cbd642a9c7c84808d4d509f5
+        name:
+          type: string
+          description: 'The name of the model, limited to 512 characters'
+          example: Model description
+    model-revision:
+      type: object
+      description: |
+        Represents a revision of a Model.
+
+        A new revision is created by uploading an IFC model.
+      properties:
+        comment:
+          type: string
+          description: 'Text describing the revision, limited to 64K characters'
+          example: Revision description
+        createdAt:
+          type: string
+          description: The date and time the revision was created in ISO 8601 format
+          example: 2016-09-26T14:45:20.000Z
+        id:
+          type: string
+          description: 'A unique identifier for the revision, represented as compacted UUID using 32 hexadecimal characters.'
+          example: 924809076a694255c489d236517a55da
+        model:
+          $ref: '#/components/schemas/model'
+        user:
+          $ref: '#/components/schemas/user'
+        version:
+          type: integer
+          description: A number that is incremented for each new revision of a model
+          example: 1
+    model-revision-status:
+      type: object
+      properties:
+        callbackUri:
+          type: string
+          description: The callback URI specified when uploading the revision
+          example: 'https://example.com'
+        filename:
+          type: string
+          description: The filename specified when uploading the revision
+          example: ARC.ifc
+        id:
+          type: string
+          description: 'A unique identifier for the status, represented as compacted UUID using 32 hexadecimal characters'
+          example: fcbb72736862483f89d44890d47ec112
+        model:
+          $ref: '#/components/schemas/model'
+        processing:
+          type: object
+          description: Represents the processing status of a pending revision
+          properties:
+            progress:
+              type: number
+              description: Processing progress as a number between 0.0 and 1.0
+              example: 0
+            status:
+              type: string
+              description: 'Valid values are ''waiting'', ''processing'', ''success'' or ''failure'''
+              example: waiting
+            error:
+              $ref: '#/components/schemas/error'
+        revision:
+          $ref: '#/components/schemas/model-revision'
+        user:
+          $ref: '#/components/schemas/user'
+    project:
+      type: object
+      description: |
+        All data in Catenda belongs to a project and has a single owner.
+      properties:
+        createdAt:
+          type: string
+          description: The date and time the project was created in ISO 8601 format
+          example: 2016-09-26T14:45:05.000Z
+        description:
+          type: string
+          description: 'A short text describing the project, limited to 1024 characters'
+          example: Project description
+        id:
+          type: string
+          description: 'A unique identifier for the project, represented as compacted UUID using 32 hexadecimal characters'
+          example: af2d8af0fa54465b89bf26dd3d92cfd0
+        imageUrl:
+          type: string
+          description: The URL for the project cover picture
+          example: 'https://api.catenda.com/v2/projects/c729538c4f674d729fd42236793e6a12/image'
+        name:
+          type: string
+          description: 'The name of the project, limited to 512 characters'
+          example: Project name
+        owner:
+          $ref: '#/components/schemas/user'
+        siteLocation:
+          type: object
+          description: 'The approximate location (latitude, longitude in WGS 84) of the project'
+          properties:
+            longitude:
+              type: string
+              description: Longitude in WGS 84
+              example: 8.26
+            latitude:
+              type: string
+              description: Latitude in WGS 84
+              example: 6.46
+        updatedAt:
+          type: string
+          description: The date and time of the last change to the project in ISO 8601 format
+          example: 2016-09-26T14:45:40.000Z
+    user:
+      type: object
+      description: |
+        Represents a User, Organization or Team.
+
+        A User is someone with a Catenda account, commonly representing a person.
+
+        An Organization represents a company, project organization or an application. Organizations do not have a username and cannot sign in to Catenda.
+
+        A Team represents a group of users within a project. Teams do not have a username and cannot sign in to Catenda.
+      properties:
+        avatarUrl:
+          type: string
+          description: The URL for the user avatar
+          example: 'https://api.catenda.com/v2/avatar/397t0ccd8f74516096c738de15dc6512'
+        createdAt:
+          type: string
+          description: The date and time the user was created in ISO 8601 format
+          example: 2016-09-20T14:55:22.000Z
+        id:
+          type: string
+          description: Represented as compacted UUID using 32 hexadecimal characters
+          example: 524809076a694255b989d236517a55da
+        name:
+          type: string
+          description: 'The name of the user, limited to 128 characters'
+          example: John Doe
+        username:
+          type: string
+          description: |
+            The handle the user identifies with. 
+
+            Commonly the username will be in email address format. Usernames are unique but subject to change, we recommend using the id field to reference users instead.
+
+            If the user represents an organization or a team the value is always null.
+
+            Limited to 50 characters.
+          example: john@doe.com
+        type:
+          type: string
+          description: |
+            The type of user, valid values are:
+              - user
+              - organization
+              - team
+          example: user
+  securitySchemes:
+    Bearer:
+      type: http
+      scheme: bearer
+      bearerFormat: AccessToken
